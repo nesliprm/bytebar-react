@@ -1,5 +1,15 @@
+import { Header } from "./components/Header.tsx";
+import { CocktailCard } from "./components/CocktailCard.tsx";
+import { Footer } from "./components/Footer.tsx";
+
 function App() {
-  return <div className="text-center font-black p-20">hello</div>;
+  return (
+    <>
+      <Header />
+      <CocktailCard />
+      <Footer />
+    </>
+  );
 }
 
 export default App;
