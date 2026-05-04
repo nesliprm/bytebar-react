@@ -5,7 +5,7 @@
   --color-teal: #80cfa9;
   --color-red: #f37f7f;
 
-  --font-roboto-slab: "Roboto Slab", serif;
-  --font-lobster: "Lobster", sans-serif;
-  --font-tiny5: "Tiny5", sans-serif;
+  --font-main: "Roboto Slab", serif;
+  --font-header: "Lobster", sans-serif;
+  --text-shadow-header: 5px 2px rgb(0, 0, 0);
 }
