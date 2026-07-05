@@ -2,7 +2,7 @@ import { SearchPanel } from "./ui/SearchPanel";
 
 export const Header = () => {
   return (
-    <div className="bg-teal p-6 rounded-2xl w-full max-w-200 mb-8 mx-auto">
+    <div className="bg-teal mt-10 p-6 rounded-2xl w-full max-w-200 mb-8 mx-auto">
       <h1 className="font-header font-bold text-7xl text-yellow text-shadow-header">
         byteBAR
       </h1>
