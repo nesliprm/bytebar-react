@@ -5,7 +5,17 @@
 //   faDice,
 // } from "@fortawesome/free-solid-svg-icons";
 
-export const CocktailCard = () => {
+type CocktailCardProps = {
+  cocktail: any | null;
+  isLoading: boolean;
+  error: string;
+};
+
+export const CocktailCard = ({
+  cocktail,
+  isLoading,
+  error,
+}: CocktailCardProps) => {
   return (
     <>
       <div className="bg-red mt-4 p-6 rounded-2xl w-full max-w-200 mb-8 mx-auto"></div>

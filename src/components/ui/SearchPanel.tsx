@@ -4,39 +4,71 @@ import {
   faRobot,
   faDice,
 } from "@fortawesome/free-solid-svg-icons";
+import { Button } from "./Button";
 
-export const SearchPanel = () => {
+type SearchPanelProps = {
+  ingredientInput: string;
+  setIngredientInput: (value: string) => void;
+  setCocktail: (cocktail: any) => void;
+  setIsLoading: (loading: boolean) => void;
+  setError: (error: string) => void;
+  isLoading: boolean;
+};
+
+export const SearchPanel = ({
+  ingredientInput,
+  setIngredientInput,
+  setCocktail,
+  setIsLoading,
+  setError,
+  isLoading,
+}: SearchPanelProps) => {
+  const handleRandomClick = () => {
+    // TODO: fetch random cocktail
+  };
+
+  const handleSearchClick = () => {
+    // TODO: fetch by ingredient
+  };
+
+  const handleAiClick = () => {
+    // TODO: fetch AI cocktail
+  };
+
   return (
     <>
       <div className="mb-4 mt-8 w-fit sm:w-max">
         <input
           type="text"
-          id="ingredient-input"
           placeholder="Type an ingredient"
+          value={ingredientInput}
+          onChange={(e) => setIngredientInput(e.target.value)}
           className="mb-1 block w-full rounded-[5px] border-[3px] border-offblack bg-offwhite py-1 pl-2.5 font-sans text-[13px]"
         />
         <div className="flex flex-col gap-2 sm:flex-row sm:gap-1">
-          <button
-            id="search-cocktail-btn"
+          <Button
+            label="SEARCH"
             title="Search by ingredient"
-            className="relative w-full cursor-pointer touch-manipulation rounded-[5px] border-[3px] p-[0.4em] font-sans text-sm font-bold uppercase tracking-[1px] text-offblack bg-offwhite shadow-[1px_1px_0_0,2px_2px_0_0,3px_3px_0_0] active:top-1.25 active:left-1.25 active:shadow-none sm:w-auto sm:px-[0.5em] sm:py-[0.25em]"
-          >
-            SEARCH <FontAwesomeIcon icon={faMagnifyingGlass} />
-          </button>
-          <button
-            id="ai-cocktail-btn"
+            icon={faMagnifyingGlass}
+            onClick={handleSearchClick}
+            disabled={isLoading}
+          />
+
+          <Button
+            label="AI SEARCH"
             title="Search by ingredient with AI"
-            className="relative w-full cursor-pointer touch-manipulation rounded-[5px] border-[3px] p-[0.4em] font-sans text-sm font-bold uppercase tracking-[1px] text-offblack  bg-offwhite shadow-[1px_1px_0_0,2px_2px_0_0,3px_3px_0_0] active:top-1.25 active:left-1.25 active:shadow-none sm:w-auto sm:px-[0.5em] sm:py-[0.25em]"
-          >
-            AI SEARCH <FontAwesomeIcon icon={faRobot} />
-          </button>
-          <button
-            id="random-cocktail-btn"
+            icon={faRobot}
+            onClick={handleAiClick}
+            disabled={isLoading}
+          />
+
+          <Button
+            label="RANDOM"
             title="Show a random cocktail (no ingredient needed)"
-            className="relative w-full cursor-pointer touch-manipulation rounded-[5px] border-[3px] p-[0.4em] font-sans text-sm font-bold uppercase tracking-[1px] text-offblack  bg-offwhite shadow-[1px_1px_0_0,2px_2px_0_0,3px_3px_0_0] active:top-1.25 active:left-1.25 active:shadow-none sm:w-auto sm:px-[0.5em] sm:py-[0.25em]"
-          >
-            RANDOM <FontAwesomeIcon icon={faDice} />
-          </button>
+            icon={faDice}
+            onClick={handleRandomClick}
+            disabled={isLoading}
+          />
         </div>
       </div>
     </>
