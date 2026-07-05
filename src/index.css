@@ -9,3 +9,7 @@
   --font-header: "Lobster", sans-serif;
   --text-shadow-header: 5px 2px rgb(0, 0, 0);
 }
+
+body {
+  background-image: url("/background.png");
+}
