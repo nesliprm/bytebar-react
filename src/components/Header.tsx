@@ -1,3 +1,5 @@
+import { SearchPanel } from "./ui/SearchPanel";
+
 export const Header = () => {
   return (
     <div className="bg-teal p-6 rounded-2xl w-full max-w-200 mb-8 mx-auto">
@@ -12,6 +14,7 @@ export const Header = () => {
           Type an ingredient to search the collection, let our boozy bot whip
           something up with AI Search, or click Random for a surprise creation!
         </p>
+        <SearchPanel />
       </div>
     </div>
   );
