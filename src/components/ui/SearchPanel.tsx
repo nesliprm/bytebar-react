@@ -19,18 +19,6 @@ export const SearchPanel = ({
   onAiSearch,
   isLoading,
 }: SearchPanelProps) => {
-  // const handleRandomClick = () => {
-  //   // TODO: fetch random cocktail
-  // };
-
-  // const handleSearchClick = () => {
-  //   // TODO: fetch by ingredient
-  // };
-
-  // const handleAiClick = () => {
-  //   // TODO: fetch AI cocktail
-  // };
-
   const [ingredientInput, setIngredientInput] = useState("");
 
   return (
