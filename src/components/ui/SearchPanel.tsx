@@ -1,4 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
 import {
   faMagnifyingGlass,
   faRobot,
@@ -7,22 +7,11 @@ import {
 import { Button } from "./Button";
 
 type SearchPanelProps = {
-  ingredientInput: string;
-  setIngredientInput: (value: string) => void;
-  setCocktail: (cocktail: any) => void;
-  setIsLoading: (loading: boolean) => void;
-  setError: (error: string) => void;
+  onRandom: () => void;
   isLoading: boolean;
 };
 
-export const SearchPanel = ({
-  ingredientInput,
-  setIngredientInput,
-  setCocktail,
-  setIsLoading,
-  setError,
-  isLoading,
-}: SearchPanelProps) => {
+export const SearchPanel = ({ onRandom, isLoading }: SearchPanelPropss) => {
   const handleRandomClick = () => {
     // TODO: fetch random cocktail
   };
@@ -34,6 +23,8 @@ export const SearchPanel = ({
   const handleAiClick = () => {
     // TODO: fetch AI cocktail
   };
+
+  const [ingredientInput, setIngredientInput] = useState("");
 
   return (
     <>
@@ -66,7 +57,7 @@ export const SearchPanel = ({
             label="RANDOM"
             title="Show a random cocktail (no ingredient needed)"
             icon={faDice}
-            onClick={handleRandomClick}
+            onClick={onRandom}
             disabled={isLoading}
           />
         </div>
