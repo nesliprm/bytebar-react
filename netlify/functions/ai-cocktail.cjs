@@ -61,11 +61,11 @@ exports.handler = async function (event, context) {
           Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
           "Content-Type": "application/json",
         },
-      }
+      },
     );
 
     const aiHTML = response.data.output?.[0]?.content?.find(
-      (c) => c.type === "output_text"
+      (c) => c.type === "output_text",
     )?.text;
 
     return {

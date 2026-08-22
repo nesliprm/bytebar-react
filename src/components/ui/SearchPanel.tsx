@@ -8,21 +8,28 @@ import { Button } from "./Button";
 
 type SearchPanelProps = {
   onRandom: () => void;
+  onSearch: (ingredient: string) => void;
+  onAiSearch: (ingredient: string) => void;
   isLoading: boolean;
 };
 
-export const SearchPanel = ({ onRandom, isLoading }: SearchPanelPropss) => {
-  const handleRandomClick = () => {
-    // TODO: fetch random cocktail
-  };
+export const SearchPanel = ({
+  onRandom,
+  onSearch,
+  onAiSearch,
+  isLoading,
+}: SearchPanelProps) => {
+  // const handleRandomClick = () => {
+  //   // TODO: fetch random cocktail
+  // };
 
-  const handleSearchClick = () => {
-    // TODO: fetch by ingredient
-  };
+  // const handleSearchClick = () => {
+  //   // TODO: fetch by ingredient
+  // };
 
-  const handleAiClick = () => {
-    // TODO: fetch AI cocktail
-  };
+  // const handleAiClick = () => {
+  //   // TODO: fetch AI cocktail
+  // };
 
   const [ingredientInput, setIngredientInput] = useState("");
 
@@ -41,7 +48,7 @@ export const SearchPanel = ({ onRandom, isLoading }: SearchPanelPropss) => {
             label="SEARCH"
             title="Search by ingredient"
             icon={faMagnifyingGlass}
-            onClick={handleSearchClick}
+            onClick={() => onSearch(ingredientInput)}
             disabled={isLoading}
           />
 
@@ -49,7 +56,7 @@ export const SearchPanel = ({ onRandom, isLoading }: SearchPanelPropss) => {
             label="AI SEARCH"
             title="Search by ingredient with AI"
             icon={faRobot}
-            onClick={handleAiClick}
+            onClick={() => onAiSearch(ingredientInput)}
             disabled={isLoading}
           />
 

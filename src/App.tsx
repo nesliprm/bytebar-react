@@ -7,6 +7,8 @@ import { flattenCocktail } from "./utils/flattenCocktail";
 
 function App() {
   const [state, setState] = useState<CocktailState>({ status: "idle" });
+
+  // RANDOM HANDLER
   const handleRandom = async () => {
     setState({ status: "loading" });
 
@@ -24,10 +26,97 @@ function App() {
       });
     }
   };
+  //
+
+  // SEARCH HANDLER
+  const handleSearch = async (ingredient: string) => {
+    if (!ingredient.trim()) {
+      setState({ status: "error", error: "Please enter an ingredient." });
+      return;
+    }
+
+    setState({ status: "loading" });
+
+    try {
+      const filterRes = await fetch(
+        `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${encodeURIComponent(ingredient)}`,
+      );
+      const filterData = await filterRes.json();
+
+      if (!Array.isArray(filterData.drinks) || filterData.drinks.length === 0) {
+        setState({
+          status: "error",
+          error:
+            "This doesn’t look like a real ingredient, please enter a valid one.",
+        });
+        return;
+      }
+
+      const randomIndex = Math.floor(Math.random() * filterData.drinks.length);
+      const id = filterData.drinks[randomIndex].idDrink;
+
+      const lookupRes = await fetch(
+        `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`,
+      );
+      const lookupData = await lookupRes.json();
+      const cocktail = flattenCocktail(lookupData.drinks[0]);
+      setState({ status: "success", cocktail });
+    } catch {
+      setState({
+        status: "error",
+        error: "Something went wrong fetching your cocktail.",
+      });
+    }
+  };
+  //
+
+  // AI SEARCH HANDLER
+  const handleAiSearch = async (ingredient: string) => {
+    if (!ingredient.trim()) {
+      setState({ status: "error", error: "Please enter an ingredient." });
+      return;
+    }
+
+    setState({ status: "loading" });
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+
+    try {
+      const response = await fetch("/.netlify/functions/ai-cocktail", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userInput: ingredient }),
+        signal: controller.signal,
+      });
+      clearTimeout(timeout);
+      const data = await response.json();
+      setState({ status: "success", html: data.answer });
+    } catch (err) {
+      clearTimeout(timeout);
+      if (err instanceof DOMException && err.name === "AbortError") {
+        setState({
+          status: "error",
+          error: "This is taking too long... something might be wrong.",
+        });
+      } else {
+        setState({
+          status: "error",
+          error: "Something went wrong with the AI cocktail. Please try again.",
+        });
+      }
+    }
+  };
+  //
 
   return (
     <>
-      <Header onRandom={handleRandom} isLoading={state.status === "loading"} />
+      <Header
+        onRandom={handleRandom}
+        onSearch={handleSearch}
+        onAiSearch={handleAiSearch}
+        isLoading={state.status === "loading"}
+      />
       <CocktailCard state={state} />
       <Footer />
     </>

@@ -2,10 +2,17 @@ import { SearchPanel } from "./ui/SearchPanel";
 
 type HeaderProps = {
   onRandom: () => void;
+  onSearch: (ingredient: string) => void;
+  onAiSearch: (ingredient: string) => void;
   isLoading: boolean;
 };
 
-export const Header = ({ onRandom, isLoading }: HeaderProps) => {
+export const Header = ({
+  onRandom,
+  onSearch,
+  onAiSearch,
+  isLoading,
+}: HeaderProps) => {
   return (
     <div className="bg-teal mt-10 p-6 rounded-2xl w-full max-w-200 mb-8 mx-auto">
       <h1 className="font-header font-bold text-7xl text-yellow text-shadow-header">
@@ -19,7 +26,12 @@ export const Header = ({ onRandom, isLoading }: HeaderProps) => {
           Type an ingredient to search the collection, let our boozy bot whip
           something up with AI Search, or click Random for a surprise creation!
         </p>
-        <SearchPanel onRandom={onRandom} isLoading={isLoading} />
+        <SearchPanel
+          onRandom={onRandom}
+          onSearch={onSearch}
+          onAiSearch={onAiSearch}
+          isLoading={isLoading}
+        />
       </div>
     </div>
   );
