@@ -7,10 +7,12 @@ import { flattenCocktail } from "./utils/flattenCocktail";
 
 function App() {
   const [state, setState] = useState<CocktailState>({ status: "idle" });
+  const [resultId, setResultId] = useState(0);
 
   // RANDOM HANDLER
   const handleRandom = async () => {
     setState({ status: "loading" });
+    setResultId((id) => id + 1);
 
     try {
       const response = await fetch(
@@ -18,7 +20,7 @@ function App() {
       );
       const data = await response.json();
       const cocktail = flattenCocktail(data.drinks[0]);
-      setState({ status: "success", cocktail });
+      setState({ status: "success", cocktail, source: "random" });
     } catch {
       setState({
         status: "error",
@@ -36,6 +38,7 @@ function App() {
     }
 
     setState({ status: "loading" });
+    setResultId((id) => id + 1);
 
     try {
       const filterRes = await fetch(
@@ -60,7 +63,7 @@ function App() {
       );
       const lookupData = await lookupRes.json();
       const cocktail = flattenCocktail(lookupData.drinks[0]);
-      setState({ status: "success", cocktail });
+      setState({ status: "success", cocktail, source: "search" });
     } catch {
       setState({
         status: "error",
@@ -70,6 +73,11 @@ function App() {
   };
   //
 
+  // WEIRD INPUT CHECK FOR AI
+  const looksWeird = (input: string) =>
+    input.length > 3 && !/[aeiou]/i.test(input) && /^[a-zA-Z\s]+$/.test(input);
+  //
+
   // AI SEARCH HANDLER
   const handleAiSearch = async (ingredient: string) => {
     if (!ingredient.trim()) {
@@ -77,7 +85,13 @@ function App() {
       return;
     }
 
-    setState({ status: "loading" });
+    setState({
+      status: "loading",
+      note: looksWeird(ingredient)
+        ? "This doesn't look like a typical ingredient, but let's see what the AI comes up with..."
+        : undefined,
+    });
+    setResultId((id) => id + 1);
 
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 8000);
@@ -91,7 +105,7 @@ function App() {
       });
       clearTimeout(timeout);
       const data = await response.json();
-      setState({ status: "success", cocktail: data.cocktail });
+      setState({ status: "success", cocktail: data.cocktail, source: "ai" });
     } catch (err) {
       clearTimeout(timeout);
       if (err instanceof DOMException && err.name === "AbortError") {
@@ -118,7 +132,7 @@ function App() {
         onAiSearch={handleAiSearch}
         isLoading={state.status === "loading"}
       />
-      <CocktailCard state={state} />
+      <CocktailCard key={resultId} state={state} />
       <Footer />
     </>
   );

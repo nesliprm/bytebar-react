@@ -13,6 +13,10 @@ export type RawDrink = {
 
 export type CocktailState =
   | { status: "idle" }
-  | { status: "loading" }
+  | { status: "loading"; note?: string }
   | { status: "error"; error: string }
-  | { status: "success"; cocktail: Cocktail };
+  | {
+      status: "success";
+      cocktail: Cocktail;
+      source: "random" | "search" | "ai";
+    };
