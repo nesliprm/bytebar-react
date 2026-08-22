@@ -91,8 +91,7 @@ function App() {
       });
       clearTimeout(timeout);
       const data = await response.json();
-      console.log("AI response:", data);
-      setState({ status: "success", cocktail: data.answer });
+      setState({ status: "success", cocktail: data.cocktail });
     } catch (err) {
       clearTimeout(timeout);
       if (err instanceof DOMException && err.name === "AbortError") {
