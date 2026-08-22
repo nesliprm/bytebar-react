@@ -16,7 +16,6 @@ export const flattenCocktail = (drink: RawDrink): Cocktail => {
 
   return {
     name: drink.strDrink,
-    thumbnail: drink.strDrinkThumb,
     instructions: drink.strInstructions,
     ingredients,
   };

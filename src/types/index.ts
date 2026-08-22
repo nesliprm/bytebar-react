@@ -1,6 +1,5 @@
 export type Cocktail = {
   name: string;
-  thumbnail: string;
   instructions: string;
   ingredients: { ingredient: string; measure: string }[];
 };
@@ -16,5 +15,4 @@ export type CocktailState =
   | { status: "idle" }
   | { status: "loading" }
   | { status: "error"; error: string }
-  | { status: "success"; cocktail: Cocktail }
-  | { status: "success"; html: string };
+  | { status: "success"; cocktail: Cocktail };
